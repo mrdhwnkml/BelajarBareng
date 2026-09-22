@@ -14,6 +14,8 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  bool _obscurePassword = true;
+
   Future<void> login() async {
     if (emailController.text.trim().isEmpty ||
         passwordController.text.trim().isEmpty) {
@@ -191,12 +193,26 @@ class _LoginPageState extends State<LoginPage> {
                                 key: const Key("login_password"),
                                 controller: passwordController,
 
-                                obscureText: true,
+                                //obscureText: true,
+                                obscureText: _obscurePassword,
 
                                 decoration: InputDecoration(
                                   hintText: "Masukkan Password",
 
                                   prefixIcon: const Icon(Icons.lock_outline),
+
+                                  suffixIcon: IconButton(
+                                        icon: Icon(
+                                          _obscurePassword
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
+                                        ),
+                                         onPressed: () {
+                                    setState(() {
+                                            _obscurePassword = !_obscurePassword;
+                                          });
+                                        },
+                                      ),
 
                                   filled: true,
 

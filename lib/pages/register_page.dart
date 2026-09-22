@@ -12,6 +12,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final usernameController = TextEditingController();
+
+  bool _obscurePassword = true;
+
   Future<void> register() async {
     final supabase = Supabase.instance.client;
     if (usernameController.text.trim().isEmpty ||
@@ -252,10 +255,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextField(
                         key: const Key("register_password"),
                         controller: passwordController,
-                        obscureText: true,
+                        obscureText: _obscurePassword,
+                      //  obscureText: true,
                         decoration: InputDecoration(
                           hintText: "Masukkan Password",
                           prefixIcon: const Icon(Icons.lock_outline),
+                          suffixIcon: IconButton( key: const Key("register_password_visibility_button"), icon: Icon( _obscurePassword ? Icons.visibility_off : Icons.visibility, ), onPressed: () { setState(() { _obscurePassword = !_obscurePassword; }); }, ),
                           filled: true,
                           fillColor: Colors.white,
                           enabledBorder: OutlineInputBorder(
